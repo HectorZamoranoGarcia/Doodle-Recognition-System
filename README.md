@@ -133,7 +133,7 @@ python app.py
 ## 🙌 Acknowledgments & Inspiration
 
 * **AI Assistance:** This project was developed with the assistance of **GitHub Copilot** as a coding companion for generating snippets, debugging, and documenting code.
-* **Academic Roots:** The architecture and mathematical foundation are inspired by university laboratory exercises (*Prácticas*) on Machine Learning.
+* **Academic Roots:** The architecture and mathematical foundation are inspired by laboratory exercises (*Prácticas*) from the **Intelligent Systems (SIN)** course at the **Universitat Politècnica de València (UPV)**.
 * **Creative Adaptation:** While the original academic exercises focused on standard handwritten digit recognition (0-9), this project **modifies and expands** that concept to recognize **hand-drawn emojis/doodles**. This shift introduces new challenges in data variance and requires a custom-built dataset, moving beyond pre-packaged standard libraries.
 
 
