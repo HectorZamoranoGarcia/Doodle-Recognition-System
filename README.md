@@ -91,7 +91,7 @@ Handdrawn-Shape-Classifier/
 └── README.md
 ```
 
-## 💻 Technologies
+## Technologies
 
 * **Language:** Python 3.10+
 * **Libraries:**
@@ -102,7 +102,7 @@ Handdrawn-Shape-Classifier/
   * **PIL (Pillow):** Image processing (filters and resizing).
 * **Tools:** VS Code, Git/GitHub.
 
-## ⚙️ Execution
+## Execution
 
 ### 1. Install Dependencies
 
@@ -130,7 +130,7 @@ python app.py
 * **Reproducibility:** A fixed random seed (`23`) was used throughout the project to ensure consistent results.
 * **Context:** Project developed as part of a *Machine Learning
 
-## 🙌 Acknowledgments & Inspiration
+## Acknowledgments & Inspiration
 
 * **AI Assistance:** This project was developed with the assistance of **GitHub Copilot** as a coding companion for generating snippets, debugging, and documenting code.
 * **Academic Roots:** The architecture and mathematical foundation are inspired by laboratory exercises (*Prácticas*) from the **Intelligent Systems (SIN)** course at the **Universitat Politècnica de València (UPV)**.
