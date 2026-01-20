@@ -4,18 +4,16 @@ from PIL import ImageOps
 import os
 import sys
 
-# ---------------------------------------------------------
+
 # Configuration and Backend Import
-# ---------------------------------------------------------
-# We attempt to import your math library (refactored name).
-# If it is still named 'LogisticRegression.py', it will work via the except block.
+
 try:
     import backend_math as model
 except ImportError:
     try:
         import LogisticRegression as model
     except ImportError:
-        print("❌ Error: Could not find 'backend_math.py' or 'LogisticRegression.py'.")
+        print("Error: Could not find 'backend_math.py' or 'LogisticRegression.py'.")
         sys.exit(1)
 
 # Map numeric labels to readable English names
@@ -33,9 +31,8 @@ DOODLE_MAP = {
     9: "☀️ Sun"
 }
 
-# ---------------------------------------------------------
+
 # Image Preprocessing (16x16 Pipeline)
-# ---------------------------------------------------------
 def preprocess_image(image):
     """
     Converts the user's drawing into a normalized feature vector
@@ -61,7 +58,6 @@ def preprocess_image(image):
     x = np.where(x > 128, 1, 0)
 
     # 6. Downsampling to 16x16 (Feature Engineering)
-    # We take 2x2 pixel blocks and sum their density
     xb = np.zeros((16, 16))
     for i in range(16):
         for j in range(16):
@@ -70,9 +66,8 @@ def preprocess_image(image):
     # 7. Flatten and normalize (divide by 4.0 because it's the max value of a 2x2 block)
     return xb.reshape(1, -1) / 4.0
 
-# ---------------------------------------------------------
+
 # Prediction Logic
-# ---------------------------------------------------------
 def classify(canvas, W, classifier_func):
     # Handle Gradio's new dictionary format (if using new Paint component)
     if isinstance(canvas, dict):
@@ -81,15 +76,14 @@ def classify(canvas, W, classifier_func):
         image = canvas
 
     if image is None:
-        return "⚠️ Empty canvas"
+        return "Empty canvas"
 
     # Preprocess
     x = preprocess_image(image)
     if x is None:
-        return "⚠️ Draw something first"
+        return "Draw something first"
 
-    # Inference using your custom math backend
-    # classifier_func is likely 'LogisticRegressionClassification'
+    # Predict
     prediction_index = classifier_func(x, W)[0] # Returns array, take 1st element
 
     # Translate index to name
@@ -97,9 +91,8 @@ def classify(canvas, W, classifier_func):
 
     return f"It looks like a {prediction_name}!"
 
-# ---------------------------------------------------------
+
 # Graphic Interface (Gradio)
-# ---------------------------------------------------------
 def create_interface(W, classifier_func):
 
     # Wrapper to pass fixed weights to the classify function
@@ -107,7 +100,7 @@ def create_interface(W, classifier_func):
         return classify(image, W, classifier_func)
 
     with gr.Blocks(title="AI Doodle Recognizer", theme=gr.themes.Soft()) as demo:
-        gr.Markdown("# 🎨 AI Doodle Recognizer")
+        gr.Markdown("# AI Doodle Recognizer")
         gr.Markdown("""
         This neural network has been trained **from scratch** (no Deep Learning libraries)
         to recognize your hand-drawn doodles.
@@ -133,22 +126,21 @@ def create_interface(W, classifier_func):
 
     return demo
 
-# ---------------------------------------------------------
+
 # Main Entry Point
-# ---------------------------------------------------------
 if __name__ == "__main__":
     # Expected path for your trained weights
     WEIGHTS_FILE = "models/weights_v1.npy"
 
     # 1. Load Weights
     if os.path.exists(WEIGHTS_FILE):
-        print(f"✅ Loading model from: {WEIGHTS_FILE}")
+        print(f"Loading model from: {WEIGHTS_FILE}")
         W = np.load(WEIGHTS_FILE)
     elif os.path.exists("MyDigitsWeights.npy"):
-        print("⚠️ Warning: Using legacy weights found in root (MyDigitsWeights.npy)")
+        print("Warning: Using legacy weights found in root (MyDigitsWeights.npy)")
         W = np.load("MyDigitsWeights.npy")
     else:
-        print(f"❌ CRITICAL ERROR: Weights file not found at '{WEIGHTS_FILE}'.")
+        print(f"CRITICAL ERROR: Weights file not found at '{WEIGHTS_FILE}'.")
         print("   Please run the training script first (notebooks/03_model_training.ipynb)")
         print("   or ensure you saved the weights in the 'models/' directory.")
         sys.exit(1)

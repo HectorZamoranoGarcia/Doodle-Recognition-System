@@ -1,21 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# # Logistic regression
-
-# In[9]:
-
-
 import numpy as np
 
-
-# **OneHotEncoding:** $\;$ function to convert class labels into one-hot encoding representation
-
-# In[10]:
-
-
 def OneHotEncoding(y):
-  # Unique class labels  
+  # Unique class labels
   c = np.unique(y); C = c.size;
 
   # Mapping class labels from 0 to C-1
@@ -25,12 +11,7 @@ def OneHotEncoding(y):
   y = np.vectorize(mapping.get)(y)
 
   # Generate one-hot encoding using np.eye
-  return np.eye(C)[y] 
-
-
-# **ComputeGradient:** $\;$ weight update for logistic regression
-
-# In[ ]:
+  return np.eye(C)[y]
 
 
 def ComputeGradient(X, Y, W):
@@ -42,7 +23,7 @@ def ComputeGradient(X, Y, W):
   # Compute logits
   a = X @ W
   # Normalizing logits for robust computation to avoid overflow
-  a -= a.max(axis=1, keepdims=True) 
+  a -= a.max(axis=1, keepdims=True)
   # Compute softmax (probabilistic class label)
   mu = np.exp(a)
   mu /= np.sum(mu, axis=1, keepdims=True)
@@ -52,29 +33,17 @@ def ComputeGradient(X, Y, W):
   return (X.T @ Z)/N
 
 
-# <p style="page-break-after:always;"></p>
-
-# **LogisticRegressionClassification:** $\;$ classification of samples provided a weight matrix
-
-# In[ ]:
-
-
 def LogisticRegressionClassification(X, W):
   N, D = X.shape
   X = np.concatenate((np.ones((N,1)), X),axis=1)
   # Compute logits
   a = X @ W
   # Normalizing logits for robust computation to avoid overflow
-  a -= a.max(axis=1, keepdims=True) 
+  a -= a.max(axis=1, keepdims=True)
   # Compute softmax (probabilistic class label)
   mu = np.exp(a)
   mu /= np.sum(mu, axis=1, keepdims=True)
   return np.argmax(mu,axis=1)
-
-
-# **LogisticRegressionTraining:** $\;$ implementation of batch training based on stochastic gradient descent
-
-# In[ ]:
 
 
 def LogisticRegressionTraining(X, y, W=None, bs=1, maxEpochs=10, eta=1e-2, tol=1e-3):
@@ -98,9 +67,6 @@ def LogisticRegressionTraining(X, y, W=None, bs=1, maxEpochs=10, eta=1e-2, tol=1
       X_batch = Xperm[(j+1)*bs:]
       Y_batch = Yperm[(j+1)*bs:]
       grad = ComputeGradient(X_batch, Y_batch, W)
-      W = W - eta*grad 
+      W = W - eta*grad
     epoch += 1
   return W
-
-
-# <p style="page-break-after:always;"></p>

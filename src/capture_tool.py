@@ -9,13 +9,12 @@ class DigitCaptureApp:
         self.X = np.array([])
         self.y = np.array([], dtype=np.int64)
 
-        # Crear carpeta data si no existe
+        # Create data folder if it doesn't exist
         if not os.path.exists("data"):
             os.makedirs("data")
 
-    # -----------------------------
+
     # Utils
-    # -----------------------------
     def status(self, msg):
         counts = np.unique(self.y, return_counts=True)
         counts = ', '.join([f"'{c}': {v}" for c,v in zip(counts[0],counts[1])])
@@ -35,9 +34,8 @@ class DigitCaptureApp:
             raise RuntimeError(f'Mismatch between labels and images.')
         return X, y
 
-    # -----------------------------
+
     # Preprocessing (16x16 Pipeline)
-    # -----------------------------
     def preprocess_image(self, image):
         image = image.convert("L")
         inverted_image = ImageOps.invert(image)
@@ -49,6 +47,7 @@ class DigitCaptureApp:
         x = np.array(resized, dtype=np.uint8)
         x = np.where(x > 128, 1, 0)
 
+
         # Downsampling a 16x16
         xb = np.zeros((16, 16))
         for i in range(16):
@@ -57,15 +56,14 @@ class DigitCaptureApp:
 
         return xb.reshape(1, -1) / 4.0
 
-    # -----------------------------
+
     # Actions
-    # -----------------------------
     def save_image(self, canvas, label):
         if isinstance(canvas, dict): image = canvas.get("composite")
         else: image = canvas
 
-        if image is None: return self.status("⚠️ Empty canvas.")
-        if not label or not label.strip().isdigit(): return self.status("⚠️ Invalid label (must be 0-9).")
+        if image is None: return self.status("Empty canvas.")
+        if not label or not label.strip().isdigit(): return self.status("Invalid label (must be 0-9).")
 
         label = int(label)
         x = self.preprocess_image(image)
@@ -74,25 +72,23 @@ class DigitCaptureApp:
         else: self.X = np.vstack([self.X, x])
         self.y = np.append(self.y, label)
 
-        return self.status(f"✅ Saved class {label}")
+        return self.status(f"Saved class {label}")
 
     def save_dataset(self, image_fn, label_fn):
         np.save(image_fn, self.X)
         np.save(label_fn, self.y)
-        return self.status(f"💾 Saved to {image_fn} & {label_fn}")
+        return self.status(f"Saved to {image_fn} & {label_fn}")
 
     def load_dataset(self, image_fn, label_fn):
         try:
             self.X, self.y = self.load_X_y(image_fn, label_fn)
-            return self.status(f"📂 Loaded from {image_fn}")
-        except Exception as e: return self.status(f"❌ Error: {e}")
+            return self.status(f"Loaded from {image_fn}")
+        except Exception as e: return self.status(f"Error: {e}")
 
-    # -----------------------------
     # UI
-    # -----------------------------
     def create_interface(self):
         with gr.Blocks(title="Doodle Dataset Creator") as demo:
-            gr.Markdown("## 🖍️ Doodle Dataset Creator")
+            gr.Markdown("## Doodle Dataset Creator")
             gr.Markdown("Draw shapes to build your custom dataset (16x16 resolution).")
 
             with gr.Row():
@@ -106,9 +102,9 @@ class DigitCaptureApp:
 
             save_btn.click(fn=self.save_image, inputs=[canvas, label_input], outputs=output)
 
-            gr.Markdown("### 💾 Dataset Management")
+            gr.Markdown("### Dataset Management")
             with gr.Row():
-                # RUTAS POR DEFECTO A LA CARPETA DATA
+            # DEFAULT PATHS TO THE DATA FOLDER
                 image_fn = gr.Textbox(label="Images Path", value="data/doodles_X.npy")
                 label_fn = gr.Textbox(label="Labels Path", value="data/doodles_y.npy")
 
