@@ -2,6 +2,12 @@
 
 Project focused on recognizing hand-drawn patterns ("doodles") using distinct machine learning approaches implemented **from scratch** in **Python**.
 
+![Python 3.10](https://img.shields.io/badge/python-v3.10+-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![NumPy](https://img.shields.io/badge/NumPy-from--scratch-013243?style=for-the-badge&logo=numpy&logoColor=white)
+![Gradio](https://img.shields.io/badge/Gradio-Interactive--UI-FFBB00?style=for-the-badge)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-Analytics-ffffff?style=for-the-badge&logo=python&logoColor=3670A0)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+
 ## Description
 
 This project aims to detect and classify 16x16 pixel drawings into 10 categories (Sun, Moon, Tree, etc.) using linear and probabilistic models.
