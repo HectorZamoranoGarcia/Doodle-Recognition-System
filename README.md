@@ -1,4 +1,4 @@
-# Hand-Drawn Shape Classifier
+# Doodle Recognition System
 
 Project focused on recognizing hand-drawn patterns ("doodles") using distinct machine learning approaches implemented **from scratch** in **Python**.
 
