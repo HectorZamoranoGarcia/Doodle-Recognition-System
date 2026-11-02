@@ -8,7 +8,7 @@ A small Python project that classifies ten hand-drawn doodle classes from 16×16
 
 ## Demo
 
-The Gradio app preprocesses a drawing, converts it to a 16×16 feature vector, and passes it to the saved logistic-regression weights. It can also load the saved perceptron weights.
+The Gradio app preprocesses a drawing, converts it to a 16×16 feature vector, and passes it to the saved logistic-regression weights.
 
 ## Run it
 
@@ -60,3 +60,4 @@ Héctor Zamorano García
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
